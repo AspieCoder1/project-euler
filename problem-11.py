@@ -1,28 +1,33 @@
+# selects each cell and finds the products in the 4 directions starting from that cell
 def compute():
 	ans = -1
-	width = len(GRID[0])
-	height = len(GRID)
+	width = len(grid[0])
+	height = len(grid)
 	for y in range(height):
 		for x in range(width):
-			if x + CONSECUTIVE <= width:
-				ans = max(grid_product(x, y,  1, 0, CONSECUTIVE), ans)
-			if y + CONSECUTIVE <= height:
-				ans = max(grid_product(x, y,  0, 1, CONSECUTIVE), ans)
-			if x + CONSECUTIVE <= width and y + CONSECUTIVE <= height:
-				ans = max(grid_product(x, y,  1, 1, CONSECUTIVE), ans)
-			if x - CONSECUTIVE >= -1    and y + CONSECUTIVE <= height:
-				ans = max(grid_product(x, y, -1, 1, CONSECUTIVE), ans)
+			# across left
+			if x + 4 <= width:
+				ans = max(grid_product(x, y,  1, 0, 4), ans)
+			# down
+			if y + 4 <= height:
+				ans = max(grid_product(x, y,  0, 1, 4), ans)
+			# left and down
+			if x + 4 <= width and y + 4 <= height:
+				ans = max(grid_product(x, y,  1, 1, 4), ans)
+			# right and down
+			if x - 4 >= -1    and y + 4 <= height:
+				ans = max(grid_product(x, y, -1, 1, 4), ans)
 	return str(ans)
 
 
 def grid_product(ox, oy, dx, dy, n):
 	result = 1
 	for i in range(n):
-		result *= GRID[oy + i * dy][ox + i * dx]
+		result *= grid[oy + i * dy][ox + i * dx]
 	return result
 
 
-GRID = [
+grid = [
 	[ 8, 2,22,97,38,15, 0,40, 0,75, 4, 5, 7,78,52,12,50,77,91, 8],
 	[49,49,99,40,17,81,18,57,60,87,17,40,98,43,69,48, 4,56,62, 0],
 	[81,49,31,73,55,79,14,29,93,71,40,67,53,88,30, 3,49,13,36,65],
