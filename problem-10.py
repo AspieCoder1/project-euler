@@ -1,23 +1,28 @@
 # Sieve of Eratosthenes
+import math
+
 def sieve(n):
-    primes = []
-    multiples = []
-    for i in range(2, n+1):
-        if i not in multiples:
-            primes.append(i)
-            for j in range(i**2, n+1, i):
-                multiples.append(j)
-    return primes
+    # n+1 used so zero is included in the array
+    m = n+1
+    numbers = [True] * m
+    numbers[0] = numbers[1] = False
+    for i in range(2, int(n**0.5)+1):
+        if numbers[i]:
+            for j in range(i*i, n+1, i):
+                numbers[j] = False
+    return numbers
+
 
 def compute(n):
     total = 0
     primes = sieve(n)
-    print(primes)
-    for i in primes:
-        total +=i
+    for i, val in enumerate(primes):
+        if val:
+            total += i
     return str(total)
 
-# print(compute(2000000))
+
+print(compute(2000000))
 
 # A much quicker way
 import eulerlib
